@@ -1,0 +1,46 @@
+[package]
+name = "rig-libsql"
+version = "0.41.0"
+edition = "2024"
+description = "libSQL-based vector store implementation for the rig framework"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/0xPlaygrounds/rig"
+keywords = ["llm", "ai", "rig", "libsql", "turso"]
+categories = ["database", "science"]
+
+[lib]
+doctest = true
+
+[lints.clippy]
+# Keep the same quality bar as the upstream rig workspace so the crate stays
+# panic-free and unwrap-free in production paths.
+dbg_macro = "forbid"
+await_holding_lock = "deny"
+await_holding_refcell_ref = "deny"
+expect_used = "deny"
+expect_fun_call = "deny"
+indexing_slicing = "deny"
+panic = "deny"
+panic_in_result_fn = "deny"
+todo = "forbid"
+unimplemented = "forbid"
+unreachable = "deny"
+unwrap_used = "deny"
+
+[dependencies]
+# Pinned to the exact upstream commit this crate was developed against, because
+# the published crates.io `rig-core 0.41.0` predates the
+# `Vec<Embedding>` (formerly `OneOrMany<Embedding>`) `insert_documents` change.
+# Swap to `version = "0.42"` (or newer) from crates.io once that release ships.
+rig-core = { git = "https://github.com/0xPlaygrounds/rig", rev = "9b9c428ed74c83576261248ba132372865bee48a", default-features = false, features = ["derive"] }
+libsql = "0.9"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tracing = "0.1"
+zerocopy = "0.8"
+
+[dev-dependencies]
+anyhow = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
