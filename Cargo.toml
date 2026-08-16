@@ -29,11 +29,11 @@ unreachable = "deny"
 unwrap_used = "deny"
 
 [dependencies]
-# Pinned to the exact upstream commit this crate was developed against, because
-# the published crates.io `rig-core 0.41.0` predates the
+# Bumped to current upstream main head (4232abdb, 55 commits past previous pin).
+# The pin exists because crates.io `rig-core 0.41.0` predates the
 # `Vec<Embedding>` (formerly `OneOrMany<Embedding>`) `insert_documents` change.
 # Swap to `version = "0.42"` (or newer) from crates.io once that release ships.
-rig-core = { git = "https://github.com/0xPlaygrounds/rig", rev = "9b9c428ed74c83576261248ba132372865bee48a", default-features = false, features = ["derive"] }
+rig-core = { git = "https://github.com/0xPlaygrounds/rig", rev = "4232abdb85a3ef2c48ccf3fa5c2cb8636588db94", default-features = false, features = ["derive"] }
 libsql = "0.9"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
